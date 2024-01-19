@@ -26,10 +26,10 @@ cell::cell(cell::cell_type type){
     this->cells = nullptr;
 }
 
-//析构函数
-cell::~cell(){
-    for (int i = 0; i < row; i++){
-        delete[] check_point[i];
-    }
-    delete[] check_point;
+//当前位置往右移动
+bool cell::moveRight(int cur_row, int cur_col){
+    cell temp=cells[cur_row][cur_col+1];
+    cells[cur_row][cur_col+1]=cells[cur_row][cur_col];
+    cells[cur_row][cur_col]=new cell(empty);
+    
 }

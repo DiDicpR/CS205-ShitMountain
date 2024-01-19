@@ -50,7 +50,7 @@ int main()
     cell1.cells[3][3] = cell(cell::box, &cell1);
 
     cell1.cells[2][4] = cell(cell::player, &cell1);
-
+    
     cell1.cells[3][5] = cell1;
     cell1.cells[3][6] = cell(cell::wall, &cell1);
     printf("start4\n");
@@ -98,18 +98,19 @@ int main()
 
     // 可以持续输入rlud，直到输入q退出
     //维护一个指向player的指针
-    cell::cur_player= &cell1.cells[2][4];
+    cell* player= &cell1.cells[3][4];
+
     cell1.show();
     char input;
     while (true)
     {
         std::cin >> input;
-        cell* f = cell::cur_player->father;
+        cell* f = player->father;
         int x = 0;
         int y = 0;
         for(int i=0;i<f->row;i++){
             for(int j=0;j<f->col;j++){
-                if(&f->cells[i][j]==cell::cur_player){
+                if(&f->cells[i][j]==player){
                     x = i;
                     y = j;
                 }
@@ -123,7 +124,7 @@ int main()
         switch (input)
         {
         case 'r':
-            (*f).moveRight(x,y,true);
+            (*f).moveRight(x,y);
             break;
         case 'l':
             (*f).moveLeft(x,y);

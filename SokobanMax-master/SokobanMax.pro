@@ -22,6 +22,7 @@ SOURCES += \
     mainwindow.cpp \
     mainwindow2.cpp \
     onecell.cpp \
+    cell.cpp \
     saveloadboard.cpp
 
 HEADERS += \
@@ -30,6 +31,7 @@ HEADERS += \
     mainwindow.h \
     mainwindow2.h \
     onecell.h \
+    cell.h \
     saveloadboard.h
 
 FORMS += \

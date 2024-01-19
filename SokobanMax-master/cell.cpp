@@ -29,7 +29,7 @@ cell::cell(cell::cell_type type){
 }
 
 //当前位置往右移动
-bool cell::moveRight(int cur_row, int cur_col){
+bool cell::moveRight(int cur_row, int cur_col,bool isPlayer){
     if (this->type==wall)
     {
         return false;
@@ -49,10 +49,17 @@ bool cell::moveRight(int cur_row, int cur_col){
                 }
             }
         }
-        if (father.moveRight(new_row,new_col+1))
+        if (father.moveRight(new_row,new_col+1,false))
         {
             father.cells[new_row][new_col+1]=(*this);
             this->father=father.father;
+            if (isPlayer)
+            {
+                /* code */
+                cell::cur_player=&father.cells[new_row][new_col+1];
+            }
+          
+            
             return true;
         }
         else
@@ -66,6 +73,12 @@ bool cell::moveRight(int cur_row, int cur_col){
     cells[cur_row][cur_col]=cell(empty);
     if (temp.type==empty)
     {
+        if (isPlayer)
+        {
+            /* code */
+            cell::cur_player=&cells[cur_row][cur_col+1];
+        }
+        
         return true;
     }
     if (temp.type==wall)
@@ -74,8 +87,15 @@ bool cell::moveRight(int cur_row, int cur_col){
         cells[cur_row][cur_col+1]=temp;
         return false;
     }
-    if (this->moveRight(cur_row,cur_col+1))
+    if (this->moveRight(cur_row,cur_col+1,false))
     {
+        if (isPlayer)
+        {
+            /* code */
+            cell::cur_player=&cells[cur_row][cur_col+1];
+        }
+     
+        
         return true;
     }
     else
@@ -86,16 +106,27 @@ bool cell::moveRight(int cur_row, int cur_col){
     }
     if (temp.type==in_box)
     {
-        if (this->moveRight(cur_row,cur_col+1))
+        if (this->moveRight(cur_row,cur_col+1,false))
         {
+            if (isPlayer)
+            {
+                /* code */
+                cell::cur_player=&cells[cur_row][cur_col+1];
+            }
             return true;
         }
         else
         {
-            if (temp.moveRight(cur_row/2,0))
+            if (temp.moveRight(cur_row/2,0,false))
             {
                 temp.cells[cur_row/2][0]=(*this);
+                (*this).father=&temp;
                 cells[cur_row][cur_col+1]=temp;
+                if (isPlayer)
+                {
+                 cell::cur_player=&temp.cells[cur_row/2][0];
+                }
+                
                 return true;
             }else{
                 cells[cur_row][cur_col]=cells[cur_row][cur_col+1];

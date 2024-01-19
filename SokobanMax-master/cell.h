@@ -1,7 +1,7 @@
 class cell{
     public:
     cell** cells;
-
+    static cell* cur_player;
     int row;
     int col;
     cell* father;
@@ -28,7 +28,8 @@ class cell{
     cell(cell_type type, cell* father);
 
     //当前位置往右移动
-    bool moveRight(int x, int y);
+    bool moveRight(int x, int y,bool isPlayer);
+    
     //当前位置往左移动
     bool moveLeft(int x, int y);
     //当前位置往上移动
